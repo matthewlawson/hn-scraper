@@ -1,5 +1,4 @@
-# hn-scraper
-Hacker News Scraper
+# Hacker News Scraper
 
 #### Installing
 Install the latest version of node and npm from [node](https://support.google.com/mail/answer/185833?hl=en)
