@@ -1,7 +1,7 @@
 # Hacker News Scraper
 
 #### Installing
-Install the latest version of node and npm from [node](https://support.google.com/mail/answer/185833?hl=en)
+Install the latest version of node and npm from [node](https://nodejs.org/en/)
 
 
 ##### Install Dependencies
