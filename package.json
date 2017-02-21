@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/matthewlawson/hn-scraper#readme",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "command-line-args": "^4.0.1"
   },
   "devDependencies": {
