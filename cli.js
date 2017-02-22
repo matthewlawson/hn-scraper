@@ -1,3 +1,4 @@
+"use strict";
 const commandLineArgs = require('command-line-args')
 // Add usage guide. 
 class Cli {
