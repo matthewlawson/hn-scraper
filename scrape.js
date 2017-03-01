@@ -30,6 +30,7 @@ class Scrape {
         }.bind(this));
 
     }
+
     parse(hnNewsBody) {
         //jquery style selectors for node ...
         let $ = cheerio.load(hnNewsBody);
@@ -45,6 +46,7 @@ class Scrape {
         
         return stories;
     }
+
     buildHNStory(storyRow, metaDataRow) {
         //element is a cheerio object representing one table row in HN
         let title, uri, author, points, comments, rank;
@@ -58,13 +60,15 @@ class Scrape {
         rank = storyRow.find('.rank').text().replace('.', '');
         return new Story(title, uri, author, points, comments, rank);
     }
+
     fetchPage(pageNumber, callback) {
         //Returns HTML of specified Hacker News page.
-        return https.get({
+        let request = https.get({
             host: 'news.ycombinator.com',
             path: '/news?p=' + pageNumber
         }, function (response) {
             // Continuously update stream with data
+            //Check status code.
             var body = '';
             response.on('data', function (d) {
                 body += d;
@@ -73,6 +77,10 @@ class Scrape {
                 callback( body );
             });
         });
+
+        request.on('error', function() {
+            console.log("error");
+        })
     }
 }
 
