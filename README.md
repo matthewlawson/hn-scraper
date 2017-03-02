@@ -38,8 +38,9 @@ Testing framework
 #### [expect.js](https://www.npmjs.com/package/expect.js) 
 BDD assertions for mocha. To have nice verbose assertions over nodes assert library.
 
-#### [nock.js](https://github.com/node-nock/nock) 
+#### [nock](https://github.com/node-nock/nock) 
 Nock is an HTTP mocking and expectations library for Node.js.
 
 ## To Do
 * Return full usage when tool is used incorrectly.
+* Better error handling when the page cannot be parsed.
