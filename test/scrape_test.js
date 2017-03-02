@@ -97,7 +97,6 @@ describe('Scrape test', function() {
                 done();
             });
         });
-
        
     });
 });

@@ -31,5 +31,12 @@ describe('CLI Option test', function() {
             expect(options.posts).to.be(postCount)
             process.argv.pop();process.argv.pop();
         });
+
+        it('should throw exception when post count is negative', function(){
+            process.argv.push('--posts');
+            process.argv.push('-1');
+            expect(cli.parseParameters).to.throwError();
+            process.argv.pop();process.argv.pop();
+        });
     });
 });

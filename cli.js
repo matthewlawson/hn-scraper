@@ -9,7 +9,7 @@ class Cli {
 
         const options = commandLineArgs(optionDefinitions);
         //Validate posts option < 100 not NaN & post usage if required.
-        if(isNaN(options.posts) || options.posts > 100) {
+        if(isNaN(options.posts) || options.posts > 100 || options.posts < 0) {
             throw {name: "INVALID_POST_OPTION"};
         }
         return options;
