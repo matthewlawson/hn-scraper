@@ -16,9 +16,10 @@ class Scrape {
             if(this.pageNumber > 10) {
                 //Most requests should be complete within 4 pages, could be more due to validation
                 //Very unlikely the first 10 pages would all fail validation criteria.
-                throw new Error("Something has probably gone wrong.")
+                //Exception can't be caught in calling class as this funciton runs asynchronously.
+                complete(null, "Something has probably gone wrong.");
             }
-            if(this.stories.length < count) {
+            else if(this.stories.length < count) {
                 //keep going ... till we fill quota..
                 this.pageNumber++;
                 this.scrape(count, complete);
@@ -27,8 +28,10 @@ class Scrape {
                 //We have enough stories, discard the ones we don't need ...
                 complete(this.stories.slice(0, count));
             }
-        }.bind(this));
-
+        }.bind(this), function(error){
+            //Error fetching page.
+            complete(null, error);
+        });
     }
 
     parse(hnNewsBody) {
@@ -61,7 +64,7 @@ class Scrape {
         return new Story(title, uri, author, points, comments, rank);
     }
 
-    fetchPage(pageNumber, callback) {
+    fetchPage(pageNumber, successCallback, errorCallback) {
         //Returns HTML of specified Hacker News page.
         let request = https.get({
             host: 'news.ycombinator.com',
@@ -69,17 +72,23 @@ class Scrape {
         }, function (response) {
             // Continuously update stream with data
             //Check status code.
-            var body = '';
-            response.on('data', function (d) {
-                body += d;
-            });
-            response.on('end', function () {
-                callback( body );
-            });
+            if(response.statusCode == 200) {
+                var body = '';
+                response.on('data', function (d) {
+                    body += d;
+                });
+                response.on('end', function () {
+                    successCallback( body );
+                });
+            }
+            else {
+                errorCallback("Bad HTTP Status returned: " + response.statusCode)
+            }
+            
         });
 
-        request.on('error', function() {
-            console.log("error");
+        request.on('error', function(error) {
+            errorCallback(error)
         })
     }
 }
